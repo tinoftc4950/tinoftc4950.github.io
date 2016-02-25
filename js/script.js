@@ -36,9 +36,42 @@ $(document).ready(function() {
         $(".cover").width($(window).width());
         setupTheTeam();
     });
+    
+    $(".videoCard").each(function(index) {
+        var url = Youtube.thumb('https://www.youtube.com/watch?v=qLuet1nf_C0');
+        var urlString = "url(" + url + ")"
+        $(this).css("background-image", urlString);
+        console.log(urlString);
+    });
 
 
 });
+
+var Youtube = (function () {
+    'use strict';
+
+    var video, results;
+
+    var getThumb = function (url, size) {
+        if (url === null) {
+            return '';
+        }
+        size    = (size === null) ? 'big' : size;
+        results = url.match('[\\?&]v=([^&#]*)');
+        video   = (results === null) ? url : results[1];
+
+        if (size === 'small') {
+            return 'http://img.youtube.com/vi/' + video + '/2.jpg';
+        }
+        return 'http://img.youtube.com/vi/' + video + '/0.jpg';
+    };
+
+    return {
+        thumb: getThumb
+    };
+}());
+
+var thumb = Youtube.thumb('https://www.youtube.com/watch?v=qLuet1nf_C0');
 
 function startAnimation() {
     var width = $(window).width();
@@ -46,7 +79,7 @@ function startAnimation() {
     var tl = new TimelineLite();
     
     // DISABLED FOR PROGRAMMING
-    disableScroll();
+//    disableScroll();
 
     //    tl.from("#4", 1, {
     //        x: -width - $("#4").width(),
