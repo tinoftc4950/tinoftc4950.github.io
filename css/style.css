@@ -1,0 +1,299 @@
+@font-face {
+    font-family: basicTitle;
+    src: url(../fonts/basictitlefont.ttf);
+}
+
+@font-face {
+    font-family: overpass;
+    src: url(../fonts/Overpass-ExtraLight.ttf);
+}
+
+@font-face {
+    font-family: avenirNext;
+    src: url(../fonts/avenir.ttc);
+}
+
+.section {
+    background-color: rgb(133, 72, 83);
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -100;
+    /*Blurs*/
+    -webkit-filter: blur(0px);
+    /*    -moz-filter: blur(3px);*/
+    /*    -o-filter: blur(3px);*/
+    /*    -ms-filter: blur(3px);*/
+    /*    filter: blur(10px);*/
+}
+
+.logoContainer {
+	border-radius: 50%;
+    background-color: white;
+    position: absolute;
+    margin-top: 15%;
+    margin-left: 3vw;
+    height: 22vw;
+    width: 22vw;
+/*    align-content: center;*/
+}
+
+.logo {
+        margin-top: 20%;
+    max-height: 14vw;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.videoOverlay {
+    opacity: 0.4;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin-bottom: 0;
+}
+
+.cover {
+    position: relative;
+    text-align: center;
+}
+
+.title {
+    font-family: basicTitle;
+    font-weight: 600;
+    color: #854853;
+    font-size: 18vw;
+    margin-bottom: 0;
+    
+    display:inline-block;
+    word-wrap: break-word;
+    margin: auto;
+    
+    margin-top: 10%;
+}
+
+.subtitle {
+    font-family: basicTitle;
+    color: #854853;
+    font-size: 2.5vw;
+    margin-top: 0;
+}
+
+.subhead {
+    text-align: center;
+    font-size: 6vw;
+    margin-top: 5%;
+    font-family: overpass;
+    text-transform: uppercase;
+    color: whitesmoke;
+}
+
+.subDescription {
+    font-size: 1.5vw;
+    font-family: 'Roboto', sans-serif;
+    color: whitesmoke;
+    margin-right: 30vw;
+    margin-left: 30vw;
+    margin-bottom: 3em;
+}
+
+.aboutUs {
+    height: 100%;
+}
+
+.aboutDescription {
+    font-size: 1.4vw;
+    margin-top: 1%;
+    margin-bottom: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: whitesmoke;
+}
+
+.theTeam {
+    height: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.overlayContainer {
+    position: fixed;
+    z-index: 100;
+    height: 100%;
+    width: 100%;
+    background-image: url("../img/person1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-color: aliceblue;
+}
+
+.overlay {
+    position: absolute;
+    background-color: #252222;
+    height: 500px;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+    bottom: 0;
+}
+
+.xbtn {
+    background-color: red;
+    position: fixed;
+    right: 0;
+    margin-right: 2vw;
+    margin-top: 2vw;
+    background-color: transparent;
+    color: #252222;
+    width: 3vw;
+}
+
+.text {
+/*    position: fixed;*/
+    position: absolute;
+    /* center the element */
+    bottom: 0%;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgba(37,34,34,0.5);
+}
+
+.coverTitle {
+    text-align: center;
+    color: white;
+    font-size: 4vw;
+    margin-top: 0.5em;
+    font-family: overpass;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: white;
+}
+
+.coverPosition {
+    text-align: center;
+    color: white;
+    font-size: 2.2vw;
+    margin-top: -1vw;
+    font-family: overpass;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.coverDescription {
+    text-align: center;
+    color: white;
+    font-size: 1.5vw;
+    margin-top: 1.5vw;
+    margin-right: 10vw;
+    margin-left: 10vw;
+    margin-bottom: 2em;
+    font-family: avenirNext;
+/*    font-weight: 100;*/
+}
+
+h1 {
+    color: white;
+    font-size: 6vw;
+}
+
+h5 {
+    color: white;
+    font-size: 2vw;
+    padding-top: 10px;
+}
+
+.box {
+    width: 12vw;
+    height: 12vw;
+    overflow: hidden;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    float: left;
+}
+
+.full {
+    background-size: cover;
+}
+
+.personBio {
+    display: none;
+}
+
+.box img {
+    max-height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.box .boxOverlay {
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: black;
+    position: absolute;
+    justify-content: center;
+    text-align: center;
+}
+
+.boxOverlay p {
+    margin-top: 5%;
+    color: aliceblue;
+    font-size: 1.5vw;
+    opacity: 1;
+}
+
+.personName {
+	display: none;
+}
+
+.personPosition {
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
