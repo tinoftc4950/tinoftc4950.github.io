@@ -36,29 +36,39 @@ $(document).ready(function() {
         $(".cover").width($(window).width());
         setupTheTeam();
     });
-    
+
+
     $(".videoCard").each(function(index) {
-        var url = Youtube.thumb('https://www.youtube.com/watch?v=qLuet1nf_C0');
+        var thumbnail = $(this).find('.videoThumbnail:first')
+
+        var videoURL = $(this).find('a:first').attr("href");
+        var url = Youtube.thumb(videoURL);
         var urlString = "url(" + url + ")"
-        $(this).css("background-image", urlString);
-        console.log(urlString);
+        thumbnail.css("background-image", urlString);
+    });
+
+    $('.videoThumbnail').on("click", function(e) {
+        e.preventDefault();
+        var videoURL = $(this).parent().find('a:first').attr("href");
+        console.log(videoURL);
+        window.open(videoURL);
     });
 
 
 });
 
-var Youtube = (function () {
+var Youtube = (function() {
     'use strict';
 
     var video, results;
 
-    var getThumb = function (url, size) {
+    var getThumb = function(url, size) {
         if (url === null) {
             return '';
         }
-        size    = (size === null) ? 'big' : size;
+        size = (size === null) ? 'big' : size;
         results = url.match('[\\?&]v=([^&#]*)');
-        video   = (results === null) ? url : results[1];
+        video = (results === null) ? url : results[1];
 
         if (size === 'small') {
             return 'http://img.youtube.com/vi/' + video + '/2.jpg';
@@ -77,9 +87,9 @@ function startAnimation() {
     var width = $(window).width();
     var height = $(window).height();
     var tl = new TimelineLite();
-    
+
     // DISABLED FOR PROGRAMMING
-//    disableScroll();
+    //    disableScroll();
 
     //    tl.from("#4", 1, {
     //        x: -width - $("#4").width(),
@@ -157,7 +167,7 @@ function startAnimation() {
         y: 0,
         ease: Power4.easeOut
     }, '-= 1')
-    
+
     tl.append(TweenLite.delayedCall(0, function() {
         enableScroll();
     }));
@@ -272,7 +282,7 @@ function setupTheTeam() {
     $('.box, .boxOverlay').on("click", function(e) {
         e.preventDefault();
         disableScroll();
-        
+
         var titleText = $(this).find('.personName:first').text();
         var positionText = $(this).find('.personPosition:first').text();
         var bioText = $(this).find('.personBio:first').text();
@@ -323,13 +333,18 @@ function setupTheTeam() {
 
 // left: 37, up: 38, right: 39, down: 40,
 // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+var keys = {
+    37: 1,
+    38: 1,
+    39: 1,
+    40: 1
+};
 
 function preventDefault(e) {
-  e = e || window.event;
-  if (e.preventDefault)
-      e.preventDefault();
-  e.returnValue = false;  
+    e = e || window.event;
+    if (e.preventDefault)
+        e.preventDefault();
+    e.returnValue = false;
 }
 
 function preventDefaultForScrollKeys(e) {
@@ -340,19 +355,19 @@ function preventDefaultForScrollKeys(e) {
 }
 
 function disableScroll() {
-  if (window.addEventListener) // older FF
-      window.addEventListener('DOMMouseScroll', preventDefault, false);
-  window.onwheel = preventDefault; // modern standard
-  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
-  window.ontouchmove  = preventDefault; // mobile
-  document.onkeydown  = preventDefaultForScrollKeys;
+    if (window.addEventListener) // older FF
+        window.addEventListener('DOMMouseScroll', preventDefault, false);
+    window.onwheel = preventDefault; // modern standard
+    window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+    window.ontouchmove = preventDefault; // mobile
+    document.onkeydown = preventDefaultForScrollKeys;
 }
 
 function enableScroll() {
     if (window.removeEventListener)
         window.removeEventListener('DOMMouseScroll', preventDefault, false);
-    window.onmousewheel = document.onmousewheel = null; 
-    window.onwheel = null; 
-    window.ontouchmove = null;  
-    document.onkeydown = null;  
+    window.onmousewheel = document.onmousewheel = null;
+    window.onwheel = null;
+    window.ontouchmove = null;
+    document.onkeydown = null;
 }
