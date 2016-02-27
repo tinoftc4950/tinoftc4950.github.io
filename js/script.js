@@ -2,7 +2,7 @@
 /*global $, jQuery, alert*/
 "use strict";
 
-//disableScroll();
+disableScroll();
 
 $(document).ready(function() {
     $(this).scrollTop(0);
