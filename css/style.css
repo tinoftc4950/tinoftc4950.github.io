@@ -15,6 +15,9 @@
 
 .section {
     background-color: rgb(133, 72, 83);
+    border-bottom-color: white;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
 }
 
 .video {
@@ -105,7 +108,7 @@
 
 .subDescription {
     font-size: 1.5em;
-    font-family: 'Roboto', sans-serif;
+    font-family: avenir;
     color: whitesmoke;
     margin-right: 30vw;
     margin-left: 30vw;
@@ -119,11 +122,11 @@
 .aboutDescription {
     font-size: 1.4em;
     margin-top: 1%;
-    margin-bottom: 10vw;
+    margin-bottom: 5vh;
     margin-left: 10vw;
     margin-right: 10vw;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
+    font-family: avenir;
     color: whitesmoke;
 }
 
@@ -303,7 +306,7 @@ h5 {
 }
 
 .videoThumbnail {
-    border-radius: 30px;
+    border-radius: 10px;
     height: 20em;
     width: 28vw;
     
@@ -327,6 +330,10 @@ h5 {
     padding-top: 3em;
 }
 
+.videos {
+	padding-top: 2em;
+}
+
 .videoName {
     font-family: overpass;
     font-size: 2.2em;
@@ -336,6 +343,58 @@ h5 {
     margin-top: -0.4em;
     text-transform: uppercase;
     color: white;
+}
+
+
+
+.awards {
+	padding-top: 2em;
+}
+
+.awardImage {
+    width: 60vw;
+    height: 60vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-clip: border-box;
+    background-position: 50% 50%;
+    border-radius: 10px;
+}
+
+.awardRow {
+	margin-top: 5em;
+    margin-left: 3vw;
+    margin-right: 3vw;
+    margin-bottom: 3em;
+}
+
+.awardName {
+	color: white;
+    font-family: overpass;
+    text-transform: uppercase;
+    font-size: 3em;
+    
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+.awardDescription {
+	color: aliceblue;
+    font-size: 1.2em;
+    font-family: avenir;
+    
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+.robot {
+    padding-bottom: 5em;
+}
+
+.robotModel {
+	display: block;
+    width: 60vw;
+    height: 60vh;
 }
 
 
