@@ -305,6 +305,7 @@ h5 {
 .videoThumbnail {
     border-radius: 30px;
     height: 20em;
+    width: 28vw;
     
     margin-right: 1vw;
     margin-left: 1vw;
