@@ -4,6 +4,7 @@
 
 $(document).ready(function() {
 
+
     // OPENING MESSAGE
     console.log('%c Think this website is awesome? \n Want more? \n Head over to my website at http://kirankunigiri.com/ ', 'font-family: Open Sans; font-size: 15px;');
 
@@ -225,8 +226,8 @@ function setupTheTeam() {
     // SETUP
     //    $(".overlayContainer").hide();
     TweenLite.set(".overlayContainer", {
-        scaleX: 0,
-        scaleY: 0
+//        scaleX: 0,
+        x: -windowWidth
     });
 
     var numC = 7;
@@ -267,8 +268,8 @@ function setupTheTeam() {
         e.preventDefault();
         enableScroll();
         TweenLite.to($(".overlayContainer"), 0.5, {
-            scaleX: 0,
-            scaleY: 0,
+            x: -windowWidth,
+//            scaleY: 0,
             ease: Power4.easeOut
         });
     });
@@ -290,15 +291,17 @@ function setupTheTeam() {
         $(".overlayContainer").find('.coverTitle:first').text(titleText);
         $(".overlayContainer").find('.coverPosition:first').text(positionText);
         $(".overlayContainer").find('.coverDescription:first').text(bioText);
+        
+        var imageName = $(this).css('background-image').replace(/^url\(['"](.+)['"]\)/, '$1');
+        imageName = imageName.substring(imageName.indexOf("person"), imageName.length);
+        console.log(imageName);
+        $(".overlayContainer").css("background-image", "url(img/full/" + imageName + ")");
 
         var overlayHeight = $(".text").height();
         $(this).find('.overlay:first').height(overlayHeight);
-        console.log($(this).find('.overlay:first').height());
-
-        //        $(".overlayContainer").show();
         TweenLite.to($(".overlayContainer"), 0.5, {
-            scaleX: 1,
-            scaleY: 1,
+            x: 0,
+//            scaleY: 1,
             ease: Power4.easeOut
         });
     });
