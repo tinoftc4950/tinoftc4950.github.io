@@ -39,21 +39,21 @@ $(document).ready(function() {
     });
 
 
-    $(".videoCard").each(function(index) {
-        var thumbnail = $(this).find('.videoThumbnail:first')
-
-        var videoURL = $(this).find('a:first').attr("href");
-        var url = Youtube.thumb(videoURL);
-        var urlString = "url(" + url + ")"
-        thumbnail.css("background-image", urlString);
-    });
-
-    $('.videoThumbnail').on("click", function(e) {
-        e.preventDefault();
-        var videoURL = $(this).parent().find('a:first').attr("href");
-        console.log(videoURL);
-        window.open(videoURL);
-    });
+//    $(".videoCard").each(function(index) {
+//        var thumbnail = $(this).find('.videoThumbnail:first')
+//
+//        var videoURL = $(this).find('a:first').attr("href");
+//        var url = Youtube.thumb(videoURL);
+//        var urlString = "url(" + url + ")"
+//        thumbnail.css("background-image", urlString);
+//    });
+//
+//    $('.videoThumbnail').on("click", function(e) {
+//        e.preventDefault();
+//        var videoURL = $(this).parent().find('a:first').attr("href");
+//        console.log(videoURL);
+//        window.open(videoURL);
+//    });
 
 
 });
