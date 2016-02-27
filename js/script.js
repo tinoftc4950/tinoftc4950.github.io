@@ -2,60 +2,46 @@
 /*global $, jQuery, alert*/
 "use strict";
 
+disableScroll();
+
 $(document).ready(function() {
+    window.scrollTo(0, 0); // values are x,y-offset
+    Pace.on("done", function() {
+        
+        // OPENING MESSAGE
+        console.log('%c Think this website is awesome? \n Want more? \n Head over to my website at http://kirankunigiri.com/ ', 'font-family: Open Sans; font-size: 15px;');
 
+        // START ANIMATION
+        startAnimation();
 
-    // OPENING MESSAGE
-    console.log('%c Think this website is awesome? \n Want more? \n Head over to my website at http://kirankunigiri.com/ ', 'font-family: Open Sans; font-size: 15px;');
-
-    // START ANIMATION
-    startAnimation();
-
-    // SIZE COVER
-    $(".cover").height($(window).height());
-    $(".cover").width($(window).width());
-
-    // SETUP BIOS
-    setupTheTeam();
-
-    // Menu link clicks
-    $('a').on("click", function(e) {
-        var link = $(this).attr("href");
-        e.preventDefault();
-        TweenLite.to(window, 1, {
-            scrollTo: {
-                y: $(link).offset().top
-            },
-            ease: Power3.easeOut
-        });
-    });
-
-
-    // RESIZE WINDOW
-    $(window).resize(function() {
+        // SIZE COVER
         $(".cover").height($(window).height());
         $(".cover").width($(window).width());
+
+        // SETUP BIOS
         setupTheTeam();
+
+        // Menu link clicks
+        $('a').on("click", function(e) {
+            var link = $(this).attr("href");
+            e.preventDefault();
+            TweenLite.to(window, 1, {
+                scrollTo: {
+                    y: $(link).offset().top
+                },
+                ease: Power3.easeOut
+            });
+        });
+
+
+        // RESIZE WINDOW
+        $(window).resize(function() {
+            $(".cover").height($(window).height());
+            $(".cover").width($(window).width());
+            setupTheTeam();
+        });
+
     });
-
-
-//    $(".videoCard").each(function(index) {
-//        var thumbnail = $(this).find('.videoThumbnail:first')
-//
-//        var videoURL = $(this).find('a:first').attr("href");
-//        var url = Youtube.thumb(videoURL);
-//        var urlString = "url(" + url + ")"
-//        thumbnail.css("background-image", urlString);
-//    });
-//
-//    $('.videoThumbnail').on("click", function(e) {
-//        e.preventDefault();
-//        var videoURL = $(this).parent().find('a:first').attr("href");
-//        console.log(videoURL);
-//        window.open(videoURL);
-//    });
-
-
 });
 
 var Youtube = (function() {
@@ -82,15 +68,12 @@ var Youtube = (function() {
     };
 }());
 
-var thumb = Youtube.thumb('https://www.youtube.com/watch?v=qLuet1nf_C0');
-
 function startAnimation() {
     var width = $(window).width();
     var height = $(window).height();
     var tl = new TimelineLite();
 
     // DISABLED FOR PROGRAMMING
-    //    disableScroll();
 
     //    tl.from("#4", 1, {
     //        x: -width - $("#4").width(),
@@ -137,7 +120,7 @@ function startAnimation() {
     // SLIDE IN BETWEEN
     var animationHeight = height - $("#0").offset().top + $("#0").height();
     TweenLite.set(".video", {
-        y: -width
+        y: -height
     });
 
     tl.from("#4", 1, {
@@ -226,7 +209,7 @@ function setupTheTeam() {
     // SETUP
     //    $(".overlayContainer").hide();
     TweenLite.set(".overlayContainer", {
-//        scaleX: 0,
+        //        scaleX: 0,
         x: -windowWidth
     });
 
@@ -269,7 +252,7 @@ function setupTheTeam() {
         enableScroll();
         TweenLite.to($(".overlayContainer"), 0.5, {
             x: -windowWidth,
-//            scaleY: 0,
+            //            scaleY: 0,
             ease: Power4.easeOut
         });
     });
@@ -291,7 +274,7 @@ function setupTheTeam() {
         $(".overlayContainer").find('.coverTitle:first').text(titleText);
         $(".overlayContainer").find('.coverPosition:first').text(positionText);
         $(".overlayContainer").find('.coverDescription:first').text(bioText);
-        
+
         var imageName = $(this).css('background-image').replace(/^url\(['"](.+)['"]\)/, '$1');
         imageName = imageName.substring(imageName.indexOf("person"), imageName.length);
         console.log(imageName);
@@ -301,7 +284,7 @@ function setupTheTeam() {
         $(this).find('.overlay:first').height(overlayHeight);
         TweenLite.to($(".overlayContainer"), 0.5, {
             x: 0,
-//            scaleY: 1,
+            //            scaleY: 1,
             ease: Power4.easeOut
         });
     });
