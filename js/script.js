@@ -5,11 +5,13 @@
 disableScroll();
 
 $(document).ready(function() {
-    window.scrollTo(0, 0); // values are x,y-offset
+    $(this).scrollTop(0);
     Pace.on("done", function() {
-        
+
         // OPENING MESSAGE
         console.log('%c Think this website is awesome? \n Want more? \n Head over to my website at http://kirankunigiri.com/ ', 'font-family: Open Sans; font-size: 15px;');
+
+        $(".xbtn").css("opacity", 1);
 
         // START ANIMATION
         startAnimation();
