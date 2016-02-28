@@ -2,19 +2,20 @@
 /*global $, jQuery, alert*/
 "use strict";
 
-disableScroll();
-
 $(document).ready(function() {
-    $(this).scrollTop(0);
+    
+    disableScroll();
+
     Pace.on("done", function() {
+        
+        enableScroll();
+        $(window).scrollTop(0);
+        disableScroll();
 
         // OPENING MESSAGE
         console.log('%c Think this website is awesome? \n Want more? \n Head over to my website at http://kirankunigiri.com/ ', 'font-family: Open Sans; font-size: 15px;');
 
         $(".xbtn").css("opacity", 1);
-
-        // START ANIMATION
-        startAnimation();
 
         // SIZE COVER
         $(".cover").height($(window).height());
@@ -34,7 +35,9 @@ $(document).ready(function() {
                 ease: Power3.easeOut
             });
         });
-
+        
+        // START ANIMATION
+        startAnimation();
 
         // RESIZE WINDOW
         $(window).resize(function() {
@@ -45,30 +48,6 @@ $(document).ready(function() {
 
     });
 });
-
-var Youtube = (function() {
-    'use strict';
-
-    var video, results;
-
-    var getThumb = function(url, size) {
-        if (url === null) {
-            return '';
-        }
-        size = (size === null) ? 'big' : size;
-        results = url.match('[\\?&]v=([^&#]*)');
-        video = (results === null) ? url : results[1];
-
-        if (size === 'small') {
-            return 'http://img.youtube.com/vi/' + video + '/2.jpg';
-        }
-        return 'http://img.youtube.com/vi/' + video + '/0.jpg';
-    };
-
-    return {
-        thumb: getThumb
-    };
-}());
 
 function startAnimation() {
     var width = $(window).width();
@@ -286,7 +265,6 @@ function setupTheTeam() {
         $(this).find('.overlay:first').height(overlayHeight);
         TweenLite.to($(".overlayContainer"), 0.5, {
             x: 0,
-            //            scaleY: 1,
             ease: Power4.easeOut
         });
     });
