@@ -3,11 +3,11 @@
 "use strict";
 
 $(document).ready(function() {
-    
+
     disableScroll();
 
     Pace.on("done", function() {
-        
+
         enableScroll();
         $(window).scrollTop(0);
         disableScroll();
@@ -35,7 +35,7 @@ $(document).ready(function() {
                 ease: Power3.easeOut
             });
         });
-        
+
         // START ANIMATION
         startAnimation();
 
@@ -233,8 +233,11 @@ function setupTheTeam() {
         enableScroll();
         TweenLite.to($(".overlayContainer"), 0.5, {
             x: -windowWidth,
-            //            scaleY: 0,
-            ease: Power4.easeOut
+            ease: Power4.easeOut,
+            onComplete: function() {
+                $(".overlayContainer").css("background-image", "url(img/loading.gif");
+                $(".overlayContainer").css("background-size", "auto");
+            }
         });
     });
 
@@ -258,15 +261,24 @@ function setupTheTeam() {
 
         var imageName = $(this).css('background-image').replace(/^url\(['"](.+)['"]\)/, '$1');
         imageName = imageName.substring(imageName.indexOf("person"), imageName.length);
-        console.log(imageName);
-        $(".overlayContainer").css("background-image", "url(img/full/" + imageName + ")");
+        $(".overlayContainer").css("background-image", "url(img/loading.gif");
+        $(".overlayContainer").css("background-size", "auto");
 
         var overlayHeight = $(".text").height();
         $(this).find('.overlay:first').height(overlayHeight);
         TweenLite.to($(".overlayContainer"), 0.5, {
             x: 0,
-            ease: Power4.easeOut
+            ease: Power4.easeOut,
+            onComplete: function() {
+                var image = new Image();
+                image.onload = function() {
+                    $(".overlayContainer").css("background-image", "url(img/full/" + imageName + ")");
+                    $(".overlayContainer").css("background-size", "cover");
+                }
+                image.src = "img/full/" + imageName;
+            }
         });
+
     });
 
     // Actions
