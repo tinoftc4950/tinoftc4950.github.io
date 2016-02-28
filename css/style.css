@@ -183,6 +183,7 @@
     color: #252222;
     width: 3em;
     opacity: 0;
+    z-index: 200;
 }
 
 .text {
