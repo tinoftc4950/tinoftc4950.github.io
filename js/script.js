@@ -259,9 +259,11 @@ function setupTheTeam() {
         $(".overlayContainer").find('.coverPosition:first').text(positionText);
         $(".overlayContainer").find('.coverDescription:first').text(bioText);
 
-        var imageName = $(this).css('background-image').replace(/^url\(['"](.+)['"]\)/, '$1');
-        imageName = imageName.substring(imageName.indexOf("person"), imageName.length);
-        $(".overlayContainer").css("background-image", "url(img/loading.gif");
+        var imageName = $(this).css('background-image')//.replace(/^url\(['"](.+)['"]\)/, '$1');
+
+        imageName = imageName.slice(4, -1).replace(/"/g, "");
+        imageName = imageName.substring(imageName.indexOf("img"), imageName.length).replace("small", "full");
+        $(".overlayContainer").css("background-image", "url(img/loading.gif)");
         $(".overlayContainer").css("background-size", "auto");
 
         var overlayHeight = $(".text").height();
@@ -272,10 +274,10 @@ function setupTheTeam() {
             onComplete: function() {
                 var image = new Image();
                 image.onload = function() {
-                    $(".overlayContainer").css("background-image", "url(img/full/" + imageName + ")");
+                    $(".overlayContainer").css("background-image", "url(" + imageName + ")");
                     $(".overlayContainer").css("background-size", "cover");
                 }
-                image.src = "img/full/" + imageName;
+                image.src = imageName + "";
             }
         });
 
