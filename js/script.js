@@ -185,7 +185,6 @@ function startAnimation() {
 function setupTheTeam() {
     var windowWidth = $(window).width();
     var isMobile = windowWidth <= 500;
-    console.log(windowWidth);
 
     // SETUP
     //    $(".overlayContainer").hide();
