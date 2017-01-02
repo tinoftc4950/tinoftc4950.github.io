@@ -1,0 +1,99 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+/**
+ * Created by Ashley on 12/6/16.
+ */
+
+@TeleOp(name="RobotDriver2", group="Opmode")
+
+
+public class RobotDriver extends OpMode {
+
+    //five motors: intake, 2 chassis, cvm, shooter
+    //beacon servo
+
+    DcMotor leftMotor, rightMotor;
+    DcMotor intake, shooter, cvm;
+    Servo beacon, gate;
+
+    @Override
+    public void init() {
+        intake = hardwareMap.dcMotor.get("in");
+        intake.setDirection(DcMotor.Direction.REVERSE);
+
+        rightMotor = hardwareMap.dcMotor.get("right_drive");
+        leftMotor = hardwareMap.dcMotor.get("left_drive");
+
+        shooter = hardwareMap.dcMotor.get("shoot");
+
+        beacon = hardwareMap.servo.get("beacon");
+        gate = hardwareMap.servo.get("gate");
+    }
+
+    @Override
+    public void loop() {
+        //2 chassis
+        float leftY = gamepad1.left_stick_y;
+        float rightY = -gamepad1.right_stick_y;
+        // the give value from the gamepad  is the set as power for the left and right motors
+
+        leftMotor.setPower(leftY);
+        rightMotor.setPower(rightY);
+
+        //beacon
+        if(gamepad1.right_trigger>0) {
+            beacon.setPosition(0.7);
+            telemetry.addData("Position",beacon.getPosition());
+        }
+        else {
+            beacon.setPosition(0.5);
+            telemetry.addData("Position", beacon.getPosition());
+        }
+
+        if(gamepad1.left_trigger>0){
+                beacon.setPosition((0.3));
+            telemetry.addData("Position",beacon.getPosition());
+            }
+        else {
+            beacon.setPosition(0.5);
+            telemetry.addData("Position", beacon.getPosition());
+        }
+
+        //intake
+        if (gamepad1.a) {
+            intake.setPower(1);
+        } else{
+            intake.setPower(0);
+        }
+
+        //shooter
+        if(gamepad1.y){
+            shooter.setPower(0.5);
+        }
+        else{
+            shooter.setPower(0);
+        }
+
+        //cvm
+        if(gamepad1.b){
+            cvm.setPower(0.5);
+        }
+        else{
+            cvm.setPower(0);
+        }
+
+        //gate
+        if (gamepad1.x) {
+            gate.setPosition((1));
+        }
+        else{
+            gate.setPosition((0));
+        }
+
+    }
+}
