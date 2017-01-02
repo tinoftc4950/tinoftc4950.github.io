@@ -1,0 +1,157 @@
+package org.firstinspires.ftc.teamcode;
+
+import android.graphics.Color;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+/**
+ * Created by Ashley on 12/20/16.
+ */
+
+@Autonomous(name = "auto", group = "opMode")
+public class AutoDriveBlue extends LinearOpMode {
+    double origTime = this.time;
+    private DcMotor leftMotor, rightMotor;
+    private OpticalDistanceSensor opticalDistanceSensor;
+    //the distance sensor is placed at the back of the robot
+    // the robot will be placed to the left of the line
+    private ColorSensor colorSensor;
+    private Servo beacon;
+
+
+    public void runOpMode() throws InterruptedException {
+        //code to run before starting
+        beacon = hardwareMap.servo.get("beacon");
+        leftMotor = hardwareMap.dcMotor.get("left_drive");
+        rightMotor = hardwareMap.dcMotor.get("right_drive");
+        //rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        opticalDistanceSensor = hardwareMap.opticalDistanceSensor.get("distance_sensor");
+        colorSensor = hardwareMap.colorSensor.get("color_sensor");
+        colorSensor.enableLed(true);
+        opticalDistanceSensor.enableLed(true);
+
+        waitForStart();
+
+        if (this.time - origTime < 1) {
+            //drive forward 5 ft
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0.5);
+        }
+
+        if (this.time - origTime < 2) {
+            //rotate 90 degrees clockwise
+            leftMotor.setPower(0.9);
+            rightMotor.setPower(0.5);
+        }
+        if (this.time - origTime < 2) {
+            //drive forward a little more than 2 feet
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0.5);
+        }
+        if (this.time - origTime < 2) {
+            //follow line
+            followLine();
+            //trial and error to find out how long robot follows beacon line-------------//
+        }
+
+        //sense color and rotate servo accordingly
+        if(senseColor()){ beacon.setPosition(0.3); }
+        else beacon.setPosition(0.7);
+
+        if (this.time - origTime < 2) {
+            //drive forward 1 inch to press appropriate button
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0.5);
+        }
+
+        if (this.time - origTime < 2) {
+            //drive backwards 1 foot
+            leftMotor.setPower(-0.5);
+            rightMotor.setPower(-0.5);
+        }
+        if (this.time - origTime < 2) {
+            //rotate 90 degrees clockwise
+            leftMotor.setPower(0.9);
+            rightMotor.setPower(0.5);
+        }
+        if (this.time - origTime < 2) {
+            //drive forward for approximately 4 feet
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0.5);
+        }
+        if (this.time - origTime < 2) {
+            //turn 90 degrees clockwise
+            leftMotor.setPower(0.9);
+            rightMotor.setPower(0.5);
+        }
+        if (this.time - origTime < 2) {
+            //follow line
+            followLine();
+        }
+
+        //sense color and rotate servo accordingly
+        if(senseColor()){ beacon.setPosition(0.3); }
+        else beacon.setPosition(0.7);
+
+        if (this.time - origTime < 2) {
+            //drive forward 1 inch to press appropriate button
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0.5);
+        }
+        if (this.time - origTime < 2) {
+            //rotate 180 degrees
+            leftMotor.setPower(0.9);
+            rightMotor.setPower(0.5);
+        }
+        if (this.time - origTime < 2) {
+            //drive forwards approximately 3 feet
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0.5);
+        }
+        if (this.time - origTime < 2) {
+            //follow line
+            followLine();
+        }
+    }
+
+    public void followLine() {
+        //-----EOPD LINE SENSOR CODE-----//
+        // If the sensor is on the line
+        //the left motor rotates to drive it back to the left of the line
+
+        double reflectance = opticalDistanceSensor.getLightDetected();
+
+        if (reflectance >= 0.25) {
+            rightMotor.setPower(-0.2); //these values are negative because we're driving backwards
+            leftMotor.setPower(0);
+        }
+
+        // Otherwise, if the sensor is off the line/detects the floor
+        // the right motor rotates to move it back toward the line
+        else {
+            leftMotor.setPower(-0.2);
+            rightMotor.setPower(0);
+            telemetry.addData("Reflectance", reflectance);
+        }
+    }
+
+    public boolean senseColor() {
+        float colorProperties[] = {0f, 0f, 0f};
+        int color = Color.argb(colorSensor.alpha(), colorSensor.red(), colorSensor.blue(), colorSensor.green());
+        float blue = colorSensor.blue();
+        float red = colorSensor.red();
+
+        if (blue > red) {
+            //telemetry.addData("Color is","BLUE");
+            return true;
+        } else return false;
+
+    }
+
+
+}
