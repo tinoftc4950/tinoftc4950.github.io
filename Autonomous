@@ -15,15 +15,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name = "auto", group = "opMode")
 public class AutoDriveBlue extends LinearOpMode {
-    double origTime = this.time;
     private DcMotor leftMotor, rightMotor;
     private OpticalDistanceSensor opticalDistanceSensor;
     //the distance sensor is placed at the back of the robot
     // the robot will be placed to the left of the line
     private ColorSensor colorSensor;
     private Servo beacon;
-
-
+    
     public void runOpMode() throws InterruptedException {
         //code to run before starting
         beacon = hardwareMap.servo.get("beacon");
@@ -37,86 +35,69 @@ public class AutoDriveBlue extends LinearOpMode {
 
         waitForStart();
 
-        if (this.time - origTime < 1) {
-            //drive forward 5 ft
+            //drive forward 60 in
             leftMotor.setPower(0.5);
             rightMotor.setPower(0.5);
-        }
-
-        if (this.time - origTime < 2) {
-            //rotate 90 degrees clockwise
-            leftMotor.setPower(0.9);
-            rightMotor.setPower(0.5);
-        }
-        if (this.time - origTime < 2) {
-            //drive forward a little more than 2 feet
+        
+            //rotate 90 degrees counter clockwise
             leftMotor.setPower(0.5);
-            rightMotor.setPower(0.5);
-        }
-        if (this.time - origTime < 2) {
-            //follow line
+            rightMotor.setPower(0);
+        
+            //follow line for 46 in
             followLine();
-            //trial and error to find out how long robot follows beacon line-------------//
-        }
 
-        //sense color and rotate servo accordingly
-        if(senseColor()){ beacon.setPosition(0.3); }
-        else beacon.setPosition(0.7);
+            if (senseColor() == 1) {
+            beacon.setPosition(0.3);
+            }
+            else beacon.setPosition(0.7);
 
-        if (this.time - origTime < 2) {
-            //drive forward 1 inch to press appropriate button
+            //drive forward 0.25 inch to press appropriate button
             leftMotor.setPower(0.5);
             rightMotor.setPower(0.5);
-        }
-
-        if (this.time - origTime < 2) {
-            //drive backwards 1 foot
+        
+            //drive backwards 24 in
             leftMotor.setPower(-0.5);
             rightMotor.setPower(-0.5);
-        }
-        if (this.time - origTime < 2) {
+
             //rotate 90 degrees clockwise
-            leftMotor.setPower(0.9);
-            rightMotor.setPower(0.5);
-        }
-        if (this.time - origTime < 2) {
-            //drive forward for approximately 4 feet
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0);
+        
+            //drive forward for approximately 48 in
             leftMotor.setPower(0.5);
             rightMotor.setPower(0.5);
-        }
-        if (this.time - origTime < 2) {
-            //turn 90 degrees clockwise
-            leftMotor.setPower(0.9);
+
+            //turn 90 degrees counter clockwise
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0);
+
+            //follow line for 48 in
+            followLine();
+        
+            //sense color and rotate servo accordingly  
+            if (senseColor() == 1){
+            beacon.setPosition(0.3);
+            }
+            else beacon.setPosition(0.7);
+    
+            //drive forward 0.25 inch to press appropriate button
+            leftMotor.setPower(0.5);
             rightMotor.setPower(0.5);
-        }
-        if (this.time - origTime < 2) {
+    
+            //drive backward 36 in
+            leftMotor.setPower(-0.5);
+            rightMotor.setPower(-0.5);
+        
+            //rotate 225 degrees clockwide
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0);
+        
+            //drive forwards approximately 33 in
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0.5);
+       
             //follow line
             followLine();
-        }
-
-        //sense color and rotate servo accordingly
-        if(senseColor()){ beacon.setPosition(0.3); }
-        else beacon.setPosition(0.7);
-
-        if (this.time - origTime < 2) {
-            //drive forward 1 inch to press appropriate button
-            leftMotor.setPower(0.5);
-            rightMotor.setPower(0.5);
-        }
-        if (this.time - origTime < 2) {
-            //rotate 180 degrees
-            leftMotor.setPower(0.9);
-            rightMotor.setPower(0.5);
-        }
-        if (this.time - origTime < 2) {
-            //drive forwards approximately 3 feet
-            leftMotor.setPower(0.5);
-            rightMotor.setPower(0.5);
-        }
-        if (this.time - origTime < 2) {
-            //follow line
-            followLine();
-        }
     }
 
     public void followLine() {
@@ -140,18 +121,29 @@ public class AutoDriveBlue extends LinearOpMode {
         }
     }
 
-    public boolean senseColor() {
+    public int senseColor() {
         float colorProperties[] = {0f, 0f, 0f};
         int color = Color.argb(colorSensor.alpha(), colorSensor.red(), colorSensor.blue(), colorSensor.green());
         float blue = colorSensor.blue();
         float red = colorSensor.red();
 
-        if (blue > red) {
-            //telemetry.addData("Color is","BLUE");
-            return true;
-        } else return false;
+        //if blue
+        if (blue - red >= 2) {
+            telemetry.addData("Color is", "BLUE");
+            return 1;
 
+            //if red
+        } else if (red - blue >= 2) {
+            telemetry.addData("Color is", "RED");
+            return 2;
+        }
+
+        //if middle
+        else {
+            //back out, turn slightly left, follow line again
+            telemetry.addData("Color is", "none");
+            return 0;
+        }
     }
-
-
+    
 }
