@@ -1,0 +1,168 @@
+package org.firstinspires.ftc.teamcode;
+
+import android.graphics.Color;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+    /**
+     * Created by Ashley and Modified by Roshan and Ashley on 12/20/16.
+     */
+
+    @Autonomous(name = "auto", group = "opMode")
+    public class AutoDriveBlue extends LinearOpMode {
+        double origTime = this.time;
+        private DcMotor leftMotor, rightMotor;
+        private OpticalDistanceSensor opticalDistanceSensor;
+        //the distance sensor is placed at the back of the robot
+        // the robot will be placed to the left of the line
+        private ColorSensor colorSensor;
+        private Servo beacon;
+
+
+        public void runOpMode() throws InterruptedException {
+            //code to run before starting
+            beacon = hardwareMap.servo.get("beacon");
+            leftMotor = hardwareMap.dcMotor.get("left_drive");
+            rightMotor = hardwareMap.dcMotor.get("right_drive");
+            rightMotor.setDirection(DcMotor.Direction.REVERSE);
+            opticalDistanceSensor = hardwareMap.opticalDistanceSensor.get("distance_sensor");
+            colorSensor = hardwareMap.colorSensor.get("color_sensor");
+            colorSensor.enableLed(true);
+            opticalDistanceSensor.enableLed(true);
+
+            waitForStart();
+
+            //drive 60" forward
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(0.5);
+            sleep();
+
+            //turn counterclock 90*
+            leftMotor.setPower(0.5);
+            rightMotor.setPower(-0.5);
+            sleep();
+
+            //drive forward up to 48"
+            leftMotor.setPower(-0.5);
+            rightMotor.setPower(-0.5);
+            sleep();
+
+
+            //sense color and rotate servo accordingly
+            if (senseColor()==1) {
+                beacon.setPosition(0.3);
+            }
+            else {
+                beacon.setPosition(0.7);
+            }
+            //drive forward 1 inch to press appropriate button
+                leftMotor.setPower(0.5);
+                rightMotor.setPower(0.5);
+                sleep();
+
+                //drive backwards 24"
+                leftMotor.setPower(0.5);
+                rightMotor.setPower(0.5);
+                sleep();
+                //rotate 90 degrees clockwise
+                leftMotor.setPower(0.9);
+                rightMotor.setPower(-0.9);
+
+                //drive forward 48"
+                leftMotor.setPower(0.5);
+                rightMotor.setPower(0.5);
+
+                //turn 90 degrees counterclock
+                leftMotor.setPower(-0.9);
+                rightMotor.setPower(0.9);
+
+                //follow line
+                followLine();
+
+
+            //sense color and rotate servo accordingly
+            if(senseColor()==1){
+                beacon.setPosition(0.3);
+            }
+            else {
+                beacon.setPosition(0.7);
+            }
+
+                //drive forward 1 inch to press appropriate button
+                leftMotor.setPower(-0.5);
+                rightMotor.setPower(-0.5);
+                sleep();
+                //drive back 36"
+                leftMotor.setPower(0.5);
+                rightMotor.setPower(0.5);
+                sleep();
+                //turn clock 225*
+                leftMotor.setPower(0.5);
+                rightMotor.setPower(-0.5);
+                sleep();
+                //drive forwards approximately  33"
+                leftMotor.setPower(-0.5);
+                rightMotor.setPower(-0.5);
+                sleep();
+                //turn 45* counterclock
+                leftMotor.setPower(-0.2);
+                rightMotor.setPower(0.2);
+                sleep();
+                //drive forward to push cap ball
+                leftMotor.setPower(-0.5);
+                rightMotor.setPower(-0.5);
+                sleep();
+                //turn clock 90*
+                leftMotor.setPower(0.2);
+                rightMotor.setPower(-0.2);
+                sleep();
+                //forward to park
+                leftMotor.setPower(-0.5);
+                rightMotor.setPower(-0.5);
+                sleep();
+        }
+
+        public void followLine() {
+            //-----EOPD LINE SENSOR CODE-----//
+            // If the sensor is on the line
+            //the left motor rotates to drive it back to the left of the line
+
+            double reflectance = opticalDistanceSensor.getLightDetected();
+
+            if (reflectance >= 0.25) {
+                rightMotor.setPower(-0.2); //these values are negative because we're driving backwards
+                leftMotor.setPower(0);
+            }
+
+            // Otherwise, if the sensor is off the line/detects the floor
+            // the right motor rotates to move it back toward the line
+            else {
+                leftMotor.setPower(-0.2);
+                rightMotor.setPower(0);
+                telemetry.addData("Reflectance", reflectance);
+            }
+        }
+        public int senseColor() {
+            float blue = colorSensor.blue();
+            float red = colorSensor.red();
+
+            //if blue
+            if (blue - red >= 2) {
+                telemetry.addData("Color is", "BLUE");
+                return 1;
+
+                //if red
+            } else if (red - blue >= 2) {
+                telemetry.addData("Color is", "RED");
+                return 2;
+            }
+
+
+    }
+
+}
